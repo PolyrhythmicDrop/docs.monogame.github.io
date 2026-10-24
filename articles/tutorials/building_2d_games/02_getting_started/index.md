@@ -243,9 +243,9 @@ With your development environment setup, it is time to create your first MonoGam
 
 After selecting _Create Project_, a new C# project will be generated based on the chosen MonoGame template and opened automatically in VSCode.
 
-| ![Figure 2-3: A new MonoGame project after being created in Visual Studio Code](./images/vscode.png) |
-| :--------------------------------------------------------------------------------------------------: |
-|           **Figure 2-3: A new MonoGame project after being created in Visual Studio Code**           |
+| ![Figure 2-3: A new MonoGame project after being created in Visual Studio Code](./images/vscode-empty-game.png) |
+| :-------------------------------------------------------------------------------------------------------------: |
+|                **Figure 2-3: A new MonoGame project after being created in Visual Studio Code**                 |
 
 Now that we have the project created, locate the `Platforms\DesktopGL\DungeonSlime.DesktopGL.csproj` file in the _Explorer_ panel, right-click it, then choose _Debug > Start New Instance_. The project will compile and run, displaying a screen similar to the following:
 
