@@ -49,8 +49,12 @@ public class Game1 : Core
 
     protected override void Update(GameTime gameTime)
     {
+#if !__IOS__
+    // Exit the game if the Back button (GamePad) or Escape key (Keyboard) is pressed.
+    // (iOS does not allow programmatically closing an app.)
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
-            Exit();
+        Exit();
+#endif
 
         // TODO: Add your update logic here
 

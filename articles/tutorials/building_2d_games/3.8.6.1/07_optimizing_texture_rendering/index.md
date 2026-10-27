@@ -168,9 +168,9 @@ These methods serve different purposes in managing the texture atlas:
 
 ## Using the TextureAtlas Class
 
-Now we can put our new `TextureAtlas` class to use by exploring two approaches; creating an atlas manually and using XML configuration.  So far, we have been practicing using textures with the MonoGame logo. Now we will use a new texture atlas that contains various sprites we will need for our game.
+Now we can put our new `TextureAtlas` class to use by exploring two approaches; creating an atlas manually and using XML configuration. So far, we have been practicing using textures with the MonoGame logo. Now we will use a new texture atlas that contains various sprites we will need for our game.
 
-Download the texture atlas by right-clicking the following image and saving it as atlas.png:
+Download the texture atlas by right-clicking the following image and saving it as `atlas.png`:
 
 | ![Figure 7-2: The texture atlas for our game](./images/atlas.png) |
 |:-----------------------------------------------------------------:|
@@ -185,19 +185,19 @@ Download the texture atlas by right-clicking the following image and saving it a
 >
 > This is not critical for simple 2D games, but adopting this practice early will serve you well as your games become more complex.
 
-Add this texture atlas to your content project using the MGCB Editor:
+Add the texture atlas to your Content project:
 
-1. Open the *Content.mgcb* file in the MGCB Editor
-2. In the editor, right-click the *images* folder and choose *Add > Existing item...*.
-3. Navigate to and choose the *atlas.png* file you downloaded to add it.
-4. Save the changes and close the MGCB Editor.
+1. Copy the `atlas.png` file you downloaded.
+1. Paste `atlas.png` into the `Content\Assets\images` directory in your project. 
+
+Just like the `logo.png` file you added in Chapter 05, `atlas.png` is automatically built into your game when you build or run the game.
 
 > [!TIP]
-> If you need a refresher on adding content using the MGCB Editor, you can revisit the [Chapter 05: The Content Pipeline](../05_content_pipeline/index.md).
+> If you need a refresher on adding content using the Content Builder application, you can revisit [Chapter 05: The Content Pipeline](../05_content_pipeline/index.md).
 
-First, we will explore creating the texture atlas and defining the texture regions directly in code.  Replace the contents of `Game1.cs` with the following:
+First, we will explore creating the texture atlas and defining the texture regions directly in code. Replace the contents of `Game1.cs` with the following:
 
-[!code-csharp[](./snippets/game1/textureatlas_usage.cs?highlight=5,11-15,31-47,65-75)]
+[!code-csharp[](./snippets/game1/textureatlas_usage.cs?highlight=5,11-15,31-47,69-76)]
 
 > [!NOTE]
 > This example uses `SamplerState.PointClamp` in `SpriteBatch.Begin(...)`. `PointClamp` keeps scaled pixel art sharp.
@@ -225,23 +225,22 @@ Running the game now shows both sprites in the upper-left corner:
 
 While manual creation works for a few sprites, managing many regions becomes cumbersome. Now we will explore the `TextureAtlas.FromFile` method to load our atlas configuration from XML instead. Perform the following:
 
-1. Open the *Content.mgcb* file in the MGCB Editor
-1. Create a new file named `atlas-definition` in the *Content/images* folder using "Add -> New Item -> XML Content".
-1. In the properties panel at the bottom for the `atlas-definition.xml` file, change the *`Build Action`* property from `Build` to *`Copy`*.
-1. Save the changes and close the MGCB Editor
-1. Open the new `atlas-definition.xml` file in your code editor (The MGCB editor cannot edit files, only manage the what content it builds)
-1. Replace the contents of the XML file with the following:
+1. In your project's *Content/Assets/images* folder, create a new XML file named `atlas-definition.xml`.
+1. In `Builder.cs`, modify the `GetContentCollection` method with the following code:
+
+  [!code-csharp[](./snippets/builder.cs?highlight=10#class-def)]
+
+  > [!NOTE]
+  > The [**IncludeCopy**](xref:MonoGame.Framework.Content.Pipeline.Builder.ContentCollection.IncludeCopy) method copies files to your project's output directory instead of building them. This is useful for file types that don't need to be decompiled or files that don't have a special importer or processor.
+  > While there is an importer for XML files, we'll keep things simple for this tutorial and copy any XML files we create to the project's output directory. For more information on using XML files with the Content Builder, see [Setting Up the Content Builder > XML and Other Data Files](https://docs.monogame.net/articles/getting_started/content_pipeline/content_builder/setup.html#xml-and-other-data-files).
+
+3. Open the new `atlas-definition.xml` file in your code editor.
+4. Replace the contents of the XML file with the following:
 
     [!code-xml[](./snippets/atlas_definition.xml)]
 
-
-    | ![Figure 7-4: The atlas-definition.xml file added to the content project with the Build Action property set to Copy](./images/mgcb-editor-copy.png) |
-    |:---------------------------------------------------------------------------------------------------------------------------------------------------:|
-    |                **Figure 7-4: The atlas-definition.xml file added to the content project with the Build Action property set to Copy**                |
-
-
     > [!TIP]
-    > Using the content pipeline to copy files ensures they are placed in the correct location alongside other game content. While there are other methods (like editing the .csproj), this approach keeps asset management centralized
+    > Using the content pipeline to copy files ensures they are placed in the correct location alongside other game content. While there are other methods (like editing the .csproj file), this approach keeps asset management centralized.
 
 1. Update the contents of `Game1.cs` with the following code:
 
@@ -253,9 +252,9 @@ The key improvements here is in [**LoadContent**](xref:Microsoft.Xna.Framework.G
 - Let the `TextureAtlas.FromFile` method handle texture loading and region creation.
 - Removed the manual creation of regions in code.
 
-This configuration based approached is advantageous because we can now add new and modify existing regions within the atlas without having to change code and/or recompile.  This also keeps the sprite definitions separate from the game logic.
+This configuration-based approached is advantageous because we can now add new and modify existing regions within the atlas without having to change code and/or recompile.  This also keeps the sprite definitions separate from the game logic.
 
-Running the game now will show the same results as *Figure 7-4* above, with the slime and bat texture regions rendered in the upper-left corner of the game window.
+Running the game now will show the same results as *Figure 7-3* above, with the slime and bat texture regions rendered in the upper-left corner of the game window.
 
 ## Conclusion
 
