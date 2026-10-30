@@ -73,7 +73,7 @@ Just like textures, audio content in MonoGame can be loaded through the content 
 
 ### Supported Audio Formats
 
-MonoGame supports several audio file formats for both sound effects and music:
+The MonoGame content pipeline supports several audio file formats for both sound effects and music:
 
 - `.wav`: Uncompressed audio, ideal for short sound effects
 - `.mp3`: Compressed audio, better for music and longer sounds
@@ -85,19 +85,15 @@ MonoGame supports several audio file formats for both sound effects and music:
 
 ### Adding Audio Files
 
-Adding audio files can be done through the content pipeline, just like we did for image files, using the MGCB Editor.  When you add an audio file to the content project, the MGCB Editor will automatically select the appropriate importer and processor for the audio file based on the file extension.
+You can add audio files through the content pipeline using the *Content Builder* application, just like we did for image files. However, we will have to tell the *Content Builder* application how we want to import and process the audio files.
 
-The processor that are available for audio files file:
+The processors that are available for audio files are:
 
-- **Sound Effects**: Processes the audio file as a [**SoundEffect**](xref:Microsoft.Xna.Framework.Audio.SoundEffect).  This is  automatically selected for *.wav* files.
-- **Song**: Processes the audio file as a [**Song**](xref:Microsoft.Xna.Framework.Media.Song).  This is automatically selected for *.mp3*, *.ogg*, and *.wma* files.
-
-| ![Figure 14-2: MGCB Editor properties panel showing Sound Effect content processor settings for .wav files](./images/sound-effect-properties.png) | ![Figure 14-3: MGCB Editor properties panel showing Song content processor settings for .mp3 files](./images/song-properties.png) |
-| :-----------------------------------------------------------------------------------------------------------------------------------------------: | :-------------------------------------------------------------------------------------------------------------------------------: |
-|                   **Figure 14-2: MGCB Editor properties panel showing Sound Effect content processor settings for .wav files**                    |               **Figure 14-3: MGCB Editor properties panel showing Song content processor settings for .mp3 files**                |
+- [**SoundEffectProcessor**](xref:Microsoft.Xna.Framework.Content.Pipeline.Processors.SoundEffectProcessor): Processes the audio file as a [**SoundEffect**](xref:Microsoft.Xna.Framework.Audio.SoundEffect). By default, the *Content Builder* processes *.wav* files as **SoundEffects**.
+- [**SongProcessor**](xref:Microsoft.Xna.Framework.Content.Pipeline.Processors.SongProcessor): Processes the audio file as a [**Song**](xref:Microsoft.Xna.Framework.Media.Song). By default, the *Content Builder* processes *.mp3*, *.ogg*, and *.wma* files as **Songs**.
 
 > [!NOTE]
-> While you typically will not need to change the processor it automatically selects, there may be times where you add files, such as *.mp3* files that are meant to be sound effects and not songs.  Always double check that the processor selected is for the intended type.
+> You can configure the *Content Builder* to build specific audio files using different processors. For example, you can have certain *.wav* files be processed as **Songs** instead of **SoundEffects**. For more information on specifying audio processors, see the [Setting Up the Content Builder > Audio](../../../../getting_started/content_pipeline/content_builder/setup.md#audio) article.
 
 ### Loading Sound Effects
 
@@ -162,20 +158,18 @@ Before we can add audio to our game, we need some sound files to work with. Down
 > - *collect.wav* is "Retro Jump Classic 08" by Davit Masia (<https://kronbits.itch.io/retrosfx>).
 > - *theme.ogg* is "Exploration" by Luis Zuno ([@ansimuz](https://twitter.com/ansimuz)).
 
-Add these files to your content project using the MGCB Editor:
+Before we can import the audio files, we need to configure the *Content Builder* application to process and build them along with our game:
 
-1. Open the *Content.mgcb* file in the MGCB Editor.
-2. Create a new folder called `audio` (right-click *Content* > *Add* > *New Folder*).
-3. Right-click the new *audio* folder and choose *Add* > *Existing Item...*.
-4. Navigate to and select the audio files you downloaded.
-5. For each file that is added, check its properties in the Properties panel:
-   - For `.wav` files, ensure the *Processor* is set to `Sound Effect`.
-   - For `.ogg` files, ensure the *Processor* is set to `Song`.
-6. Save the changes and close the MGCB Editor.
+1. Create a new folder called `audio` in the `Content\Assets\` directory of your project.
+2. Place the `bounce.wav`, `collect.wav`, and `theme.ogg` files in the new `audio` folder.
+3. Open the `Builder.cs` file (`Content\Builder\Builder.cs`).
+4. Edit the **GetContentCollection** method of `Builder.cs` with the following code:
+
+[!code-csharp[](./snippets/builder.cs?highlight=13-16)]
 
 Next, open the `Game1.cs` file and update it to the following:
 
-[!code-csharp[](./snippets/game1.cs?highlight=3,6,39-43,92-111,201-202,220-221)]
+[!code-csharp[](./snippets/game1.cs?highlight=3,6,39-43,92-111,204-205,223-224)]
 
 The key changes here are:
 
