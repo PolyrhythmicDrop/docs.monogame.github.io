@@ -130,7 +130,7 @@ The `Tilemap` class also requires a method to load and create an instance of the
 
 ## Updating the Game
 
-Now that we have the `Tilemap` and `Tileset` classes defined, we can update our game to use them. We will need to
+Now that we have the `Tilemap` and `Tileset` classes defined, we can update our game to use them. We will need to:
 
 1. Update the texture atlas to include the tileset.
 2. Create a tilemap xml configuration file.
@@ -140,10 +140,8 @@ Now that we have the `Tilemap` and `Tileset` classes defined, we can update our 
 
 Currently, the texture atlas we have been using only contains the sprites for the slime and bat animations. We need update it to a new version that contains the tileset as well.
 
-Right-click the following image and save it as `atlas.png` in the `Content/images` directory of the *DungeonSlime* project (your main game project), overwriting the existing one.
+Right-click the following image and save it as `atlas.png` in the `Content/Assets/images` directory of the `DungeonSlime` folder (your main game folder), overwriting the existing `atlas.png` file.
 
-> [!NOTE]
-> You do not need to do this in the MGCB editor as you are simply replacing the file and not altering any of its import properties.
 
 | ![Figure 13-3: The texture atlas for our game updated to include the tileset for the tilemap](./images/atlas.png) |
 | :---------------------------------------------------------------------------------------------------------------: |
@@ -156,22 +154,17 @@ Right-click the following image and save it as `atlas.png` in the `Content/image
 
 Now that we have the texture atlas updated to include the tileset, we need to create a tilemap configuration that our game can load. The configuration will be an XML file that specifies the tileset to use and the arrangement of tiles in the tilemap.
 
-We need to add this configuration file to our content project in the *Content/images* folder with the MGCB Editor, in the same way we did with the "atlas-definition.xml":
+We need to add this configuration file to our content project in the *Content/Assets/images* folder in the same way we did with `atlas-definition.xml`:
 
-1. Open the *Content.mgcb* content project file in the MGCB Editor.
-2. Right-click the *images* folder and choose *Add > New Item...*.
-3. Select the *Xml Content (.xml)* type and name it `tilemap-definition`
-4. Select the `tilemap-definition.xml` file you just created.
-5. In the Properties panel, change the *Build Action* property from *Build* to *Copy*.
-6. Save the changes in the MGCB Editor.
-
-| ![Figure 13-4: The Content project in the MGCB Editor with the tilemap-definition.xml file added and the Build Action property set to copy](./images/mgcb-editor.png) |
-| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
-|             **Figure 13-4: The Content project in the MGCB Editor with the tilemap-definition.xml file added and the Build Action property set to copy**              |
-
-7. Open the `tilemap-definition.xml` file in your code editor and replace its contents with the following and save it:
+1. In your project's *Content/Assets/images* folder, create a new XML file named `tilemap-definition.xml`. 
+1. Open the `tilemap-definition.xml` file in your code editor and replace its contents with the following code:
 
 [!code-xml[](./snippets/tilemap-definition.xml)]
+
+3. Save the file.
+
+> [!NOTE]
+> Because we already edited the `Builder.cs` file to copy XML files, you do not need to edit `Builder.cs` again. The `tilemap-definition.xml` file is automatically copied over to your game's output directory when you build the game.
 
 This tilemap configuration creates a simple dungeon layout with walls around the perimeter and an open floor in the middle. The tile IDs correspond to specific tiles in the tileset:
 
@@ -186,7 +179,7 @@ This tilemap configuration creates a simple dungeon layout with walls around the
 
 With all of the assets now in place and configured, we can update the `Game1` class to load the tilemap and draw it. We will also need to update the collision logic so that the boundary is no longer the edge of the screen, but instead the edges of the wall tiles of the tilemap. Open `Game1.cs` and make the following updates:
 
-[!code-csharp[](./snippets/game1.cs?highlight=31-35,46-61,80-82,109,111,113,125,118,120,122,124,142,145,147,150,153,156,158,161,177-179,301-302)]
+[!code-csharp[](./snippets/game1.cs?highlight=31-35,48-53,55-58,60-61,80-82,109-128,142-166,180-186,302-303)]
 
 The key changes to the `Game1` class include:
 

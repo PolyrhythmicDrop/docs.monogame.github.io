@@ -230,7 +230,8 @@ While manual creation works for a few sprites, managing many regions becomes cum
 
   [!code-csharp[](./snippets/builder.cs?highlight=10#class-def)]
 
-<!-- TODO: Edit the IncludeCopy xref so it goes to the right method. -->
+<!-- TODO: Fix the xref for IncludeCopy -->
+
   > [!NOTE]
   > The [**IncludeCopy**](xref:MonoGame.Framework.Content.Pipeline.Builder.ContentCollection.IncludeCopy) method copies files to your project's output directory instead of building them. This is useful for file types that don't need to be decompiled or files that don't have a special importer or processor.
   > While there is an importer for XML files, we'll keep things simple for this tutorial and copy any XML files we create to the project's output directory. For more information on using XML files with the Content Builder, see [Setting Up the Content Builder > XML and Other Data Files](https://docs.monogame.net/articles/getting_started/content_pipeline/content_builder/setup.html#xml-and-other-data-files).

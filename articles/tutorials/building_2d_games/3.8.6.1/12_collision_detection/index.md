@@ -213,7 +213,7 @@ For our game, we are going to implement circle based collision detection. MonoGa
 
 In the root of the *MonoGameLibrary* project, add a new file named `Circle.cs`. Add the following code as the foundation of the `Circle` struct:
 
-[!code-csharp[](./snippets/cirlce.cs#declaration)]
+[!code-csharp[](./snippets/circle.cs#declaration)]
 
 > [!NOTE]
 > Notice that the struct has declared it will implement the [`IEquatable<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.iequatable-1) interface. When creating value types like this, it is recommended to implement `IEquatable<T>` because it has better performance for comparing objects and can help avoid boxing.
@@ -228,11 +228,11 @@ The `Circle` struct uses both private and public fields to store its state.
 
 First, add the following private static field that stores a reusable empty circle:
 
-[!code-csharp[](./snippets/cirlce.cs#fields_static)]
+[!code-csharp[](./snippets/circle.cs#fields_static)]
 
 Next, add the following public fields that define the circle's position and size:
 
-[!code-csharp[](./snippets/cirlce.cs#fields)]
+[!code-csharp[](./snippets/circle.cs#fields)]
 
 These public fields store the fundamental properties of the circle:
 
@@ -245,18 +245,18 @@ The `Circle` struct provides properties to access its location, state, and its b
 
 Add the following property to get the location of the circle as a [**Point**](xref:Microsoft.Xna.Framework.Point) value:
 
-[!code-csharp[](./snippets/cirlce.cs#properties_location)]
+[!code-csharp[](./snippets/circle.cs#properties_location)]
 
 Add the following properties to track empty circles:
 
-[!code-csharp[](./snippets/cirlce.cs#properties_empty)]
+[!code-csharp[](./snippets/circle.cs#properties_empty)]
 
 > [!NOTE]
 > The `Empty` property returns a reusable instance of an empty circle stored in the private static field `s_empty`. This is more efficient than creating new empty circles each time one is needed, as it reuses the same instance in memory.
 
 Add the following properties for getting the circle's boundaries:
 
-[!code-csharp[](./snippets/cirlce.cs#properties_boundaries)]
+[!code-csharp[](./snippets/circle.cs#properties_boundaries)]
 
 > [!TIP]
 > These boundary properties are particularly useful when you need to know the extent of a circle in screen space, such as determining if a circle is visible on screen or creating a bounding box around the circle.
@@ -265,7 +265,7 @@ Add the following properties for getting the circle's boundaries:
 
 The `Circle` struct provides two ways to create a new circle:
 
-[!code-csharp[](./snippets/cirlce.cs#ctors)]
+[!code-csharp[](./snippets/circle.cs#ctors)]
 
 - The first constructor accepts individual x and y coordinates for the circle's center.
 - The second accepts a [**Point**](xref:Microsoft.Xna.Framework.Point) struct that combines both coordinates.
@@ -278,19 +278,19 @@ The `Circle` struct implements several methods to support equality comparison be
 
 First, add the following method that will check if two circles are overlapping with each other:
 
-[!code-csharp[](./snippets/cirlce.cs#methods_intersects)]
+[!code-csharp[](./snippets/circle.cs#methods_intersects)]
 
 Next we start implementing the [`IEquatable<T>`](https://learn.microsoft.com/en-us/dotnet/api/system.iequatable-1) Interface, add the following methods for comparing a circle with another object:
 
-[!code-csharp[](./snippets/cirlce.cs#methods_equals)]
+[!code-csharp[](./snippets/circle.cs#methods_equals)]
 
 Next, add the following override for `GetHashCode` to support using circles in hash-based collections:
 
-[!code-csharp[](./snippets/cirlce.cs#methods_hashcode)]
+[!code-csharp[](./snippets/circle.cs#methods_hashcode)]
 
 Finally, add the following operator overloads to support using == and != with circles:
 
-[!code-csharp[](./snippets/cirlce.cs#methods_operators)]
+[!code-csharp[](./snippets/circle.cs#methods_operators)]
 
 IEquatable interface implemented, red squiggles be gone.
 
